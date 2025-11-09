@@ -205,6 +205,10 @@
                 <option>Saddle Ridge</option>
                 <option>Other</option>
               </select>
+            <div class="mt-2 hidden" data-other-container>
+              <label class="text-sm text-neutral-600">If Other, specify</label>
+              <input name="neighbourhood_other" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="Type neighbourhood" />
+            </div>
             </div>
           </div>
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -309,6 +313,10 @@
                 <option>Saddle Ridge</option>
                 <option>Other</option>
               </select>
+            <div class="mt-2 hidden" data-other-container>
+              <label class="text-sm text-neutral-600">If Other, specify</label>
+              <input name="neighbourhood_other" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="Type neighbourhood" />
+            </div>
             </div>
           </div>
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -322,6 +330,10 @@
                 <option>Bedroom</option>
                 <option>Other</option>
               </select>
+            <div class="mt-2 hidden" data-other-container>
+              <label class="text-sm text-neutral-600">If Other, specify</label>
+              <input name="space_type_other" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="Describe the space" />
+            </div>
             </div>
             <div>
               <label class="text-sm text-neutral-600">Approx size*</label>
@@ -414,5 +426,31 @@
       </div>
       <div class="border-t border-neutral-200 py-6 text-center text-xs text-neutral-500">© 2025 StashIt. All rights reserved.</div>
     </footer>
-  </body>
+
+  <!-- Simple script to show/hide “Other” text fields when user selects Other -->
+  <script>
+    (function () {
+      function wireOther(select) {
+        var container = select.parentElement.querySelector('[data-other-container]');
+        if (!container) return;
+        var input = container.querySelector('input');
+        function sync() {
+          var isOther = (select.value || '').toLowerCase() === 'other';
+          container.classList.toggle('hidden', !isOther);
+          if (isOther) {
+            input.setAttribute('required', 'required');
+          } else {
+            input.removeAttribute('required');
+            input.value = '';
+          }
+        }
+        select.addEventListener('change', sync);
+        sync();
+      }
+      document.querySelectorAll('select[name="neighbourhood"]').forEach(wireOther);
+      var spaceType = document.querySelector('form[name="host"] select[name="space_type"]');
+      if (spaceType) wireOther(spaceType);
+    })();
+  </script>
+</body>
 </html>
