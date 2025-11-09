@@ -452,5 +452,21 @@
       if (spaceType) wireOther(spaceType);
     })();
   </script>
+  <script>
+    // Limit photo uploads to max 5 images per form
+    (function(){
+      function enforceMaxFiles(input, max){
+        input.addEventListener('change', function(){
+          if (this.files && this.files.length > max) {
+            alert('Please upload up to ' + max + ' photos.');
+            this.value = '';
+          }
+        });
+      }
+      document.querySelectorAll('input[type="file"][name="photos"]').forEach(function(inp){
+        enforceMaxFiles(inp, 5);
+      });
+    })();
+  </script>
 </body>
 </html>
