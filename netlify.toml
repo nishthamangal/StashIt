@@ -1,0 +1,6 @@
+[functions]
+directory = "netlify/functions"
+
+[functions."send-email"]
+events = ["submission-created"]
+node_bundler = "esbuild"
