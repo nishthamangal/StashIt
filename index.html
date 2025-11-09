@@ -171,7 +171,9 @@
       <div class="mx-auto max-w-3xl px-4 py-16">
         <h2 class="text-2xl font-semibold md:text-3xl">Tell us what you need</h2>
         <p class="mt-2 text-neutral-600">Complete this quick form and we’ll match you with nearby, verified spaces — typically 25–40% cheaper than storage units.</p>
-        <form action="https://formspree.io/f/YOUR_RENTER_ENDPOINT" method="POST" class="mt-8 grid grid-cols-1 gap-4">
+        <form name="renter" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" action="/thank-you.html" class="mt-8 grid grid-cols-1 gap-4">
+          <input type="hidden" name="form-name" value="renter" />
+          <p class="hidden" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" /></label></p>
           <input type="hidden" name="_subject" value="New Renter Lead – StashIt" />
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
@@ -184,7 +186,7 @@
             </div>
             <div>
               <label class="text-sm text-neutral-600">Phone*</label>
-              <input required name="phone" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="403‑555‑0123" />
+              <input required name="phone" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="+1-403-614-9716" />
             </div>
             <div>
               <label class="text-sm text-neutral-600">Neighbourhood*</label>
@@ -256,6 +258,11 @@
             <label class="text-sm text-neutral-600">What are you storing?*</label>
             <textarea required name="items" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" rows="3" placeholder="e.g., boxes, skis, furniture. No perishables or hazardous items."></textarea>
           </div>
+          <div>
+            <label class="text-sm text-neutral-600">Item photos (optional, up to 5 images)</label>
+            <input type="file" name="photos" accept="image/*" multiple class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
+          </div>
+          <div data-netlify-recaptcha="true" class="mt-2"></div>
           <label class="flex items-start gap-2 text-sm text-neutral-600"><input type="checkbox" required class="mt-1"/> I agree not to store hazardous, illegal, perishable, or flammable items and to follow StashIt’s access rules.</label>
           <button class="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-[#1E4D2B] px-6 py-3 text-white">Submit renter request</button>
           <p class="text-xs text-neutral-500">By submitting, you consent to be contacted about matching spaces and agree to our privacy policy.</p>
@@ -268,7 +275,9 @@
       <div class="mx-auto max-w-3xl px-4 py-16">
         <h2 class="text-2xl font-semibold md:text-3xl">List your space and start earning</h2>
         <p class="mt-2 text-neutral-600">StashIt hosts earn passive income while helping neighbours. Verified profiles and clear rules keep it simple and safe.</p>
-        <form action="https://formspree.io/f/YOUR_HOST_ENDPOINT" method="POST" class="mt-8 grid grid-cols-1 gap-4">
+        <form name="host" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" action="/thank-you.html" class="mt-8 grid grid-cols-1 gap-4">
+          <input type="hidden" name="form-name" value="host" />
+          <p class="hidden" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" /></label></p>
           <input type="hidden" name="_subject" value="New Host Lead – StashIt" />
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
@@ -281,7 +290,7 @@
             </div>
             <div>
               <label class="text-sm text-neutral-600">Phone*</label>
-              <input required name="phone" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="403‑555‑0123" />
+              <input required name="phone" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="+1-403-614-9716" />
             </div>
             <div>
               <label class="text-sm text-neutral-600">Neighbourhood*</label>
@@ -365,9 +374,14 @@
             </div>
           </div>
           <div>
+            <label class="text-sm text-neutral-600">Space photos (3–5 images)</label>
+            <input type="file" name="photos" accept="image/*" multiple class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
+          </div>
+          <div>
             <label class="text-sm text-neutral-600">House rules / notes</label>
             <textarea name="rules" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" rows="3" placeholder="e.g., no access after 10pm; fragile items okay; staircase to basement."></textarea>
           </div>
+          <div data-netlify-recaptcha="true" class="mt-2"></div>
           <label class="flex items-start gap-2 text-sm text-neutral-600"><input type="checkbox" required class="mt-1"/> I confirm I own or control the space, and I won’t accept hazardous, illegal, perishable, or flammable items.</label>
           <button class="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-[#4F9DCB] px-6 py-3 text-white">Submit host application</button>
           <p class="text-xs text-neutral-500">By submitting, you consent to be contacted for listing verification and agree to our privacy policy.</p>
@@ -393,8 +407,8 @@
         <div>
           <div class="text-sm font-semibold text-neutral-700">Contact</div>
           <ul class="mt-3 space-y-2 text-sm text-neutral-600">
-            <li>📧 hello@stashit.app</li>
-            <li>📞 +1 (403) 555‑0174</li>
+            <li>📧 <a href="mailto:info@stashitvault.com" class="hover:text-[#1E4D2B]">info@stashitvault.com</a></li>
+            <li>📞 <a href="tel:+14036149716" class="hover:text-[#1E4D2B]">+1-403-614-9716</a></li>
           </ul>
         </div>
       </div>
