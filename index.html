@@ -59,13 +59,13 @@
                 <div class="h-2 w-10 rounded-full bg-[#4F9DCB] mb-3"></div>
                 <div class="text-sm text-neutral-500">Neighbourhood</div>
                 <div class="text-base font-semibold">Beltline</div>
-                <div class="text-xs text-neutral-500">High demand</div>
+                <div class="text-xs text-neutral-500">High Storage Demand</div>
               </div>
               <div class="rounded-2xl border border-neutral-200 p-4">
                 <div class="h-2 w-10 rounded-full bg-[#1E4D2B] mb-3"></div>
                 <div class="text-sm text-neutral-500">Neighbourhood</div>
                 <div class="text-base font-semibold">Mission</div>
-                <div class="text-xs text-neutral-500">Walkable</div>
+                <div class="text-xs text-neutral-500">Storage Available</div>
               </div>
             </div>
             <div class="mt-4 rounded-xl bg-neutral-50 p-4 text-sm">📍 Calgary‑first. Expanding soon.</div>
@@ -157,7 +157,7 @@
       <div class="mx-auto flex max-w-7xl flex-col items-start gap-4 px-4 py-12 md:flex-row md:items-center md:justify-between">
         <div>
           <div class="text-2xl font-semibold">Ready to get started?</div>
-          <p class="text-white/90">Find storage near you or earn from unused space in minutes.</p>
+          <p class="text-white/90">Find storage near you or earn from your unused space in minutes.</p>
         </div>
         <div class="flex gap-3">
           <a href="#renter" class="rounded-2xl bg-white px-5 py-3 text-sm font-medium text-[#1E4D2B] shadow-sm hover:shadow">I need storage</a>
@@ -280,131 +280,158 @@
     </section>
 
     <!-- Host Form -->
-    <section id="host" class="bg-neutral-50">
-      <div class="mx-auto max-w-3xl px-4 py-16">
-        <h2 class="text-2xl font-semibold md:text-3xl">List your space and start earning</h2>
-        <p class="mt-2 text-neutral-600">StashIt hosts earn passive income while helping neighbours. Verified profiles and clear rules keep it simple and safe.</p>
-        <form name="host" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" action="/thank-you.html" class="mt-8 grid grid-cols-1 gap-4">
-          <input type="hidden" name="form-name" value="host" />
-          <p class="hidden" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" /></label></p>
-          <input type="hidden" name="_subject" value="New Host Lead – StashIt" />
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div>
-              <label class="text-sm text-neutral-600">Full name*</label>
-              <input required name="name" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600">Email*</label>
-              <input required type="email" name="email" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600">Phone*</label>
-              <input required name="phone" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="+1-403-614-9716" />
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600">Neighbourhood*</label>
-              <select required name="neighbourhood" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
-                <option value="">Select…</option>
-                <option>Beltline</option>
-                <option>Downtown West End</option>
-                <option>Eau Claire</option>
-                <option>Mission</option>
-                <option>East Village</option>
-                <option>Cliff Bungalow</option>
-                <option>Sunalta</option>
-                <option>Mahogany</option>
-                <option>Seton</option>
-                <option>Glacier Ridge</option>
-                <option>Saddle Ridge</option>
-                <option>Other</option>
-              </select>
-              <div class="mt-2 hidden" data-other-container>
-                <label class="text-sm text-neutral-600">If Other, specify</label>
-                <input name="neighbourhood_other" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="Type neighbourhood" />
-              </div>
-            </div>
+<section id="host" class="bg-neutral-50">
+  <div class="mx-auto max-w-3xl px-4 py-16">
+    <h2 class="text-2xl font-semibold md:text-3xl">List your space and start earning</h2>
+    <p class="mt-2 text-neutral-600">StashIt hosts earn passive income while helping neighbours. Verified profiles and clear rules keep it simple and safe.</p>
+
+    <form name="host" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+          enctype="multipart/form-data" action="/thank-you.html"
+          class="mt-8 grid grid-cols-1 gap-4">
+      <input type="hidden" name="form-name" value="host" />
+      <p class="hidden" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+      <input type="hidden" name="_subject" value="New Host Lead – StashIt" />
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div>
+          <label class="text-sm text-neutral-600">Full name*</label>
+          <input required name="name" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
+        </div>
+        <div>
+          <label class="text-sm text-neutral-600">Email*</label>
+          <input required type="email" name="email" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
+        </div>
+        <div>
+          <label class="text-sm text-neutral-600">Phone*</label>
+          <input required name="phone" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="+1-403-614-9716" />
+        </div>
+
+        <!-- Neighbourhood + Other -->
+        <div>
+          <label class="text-sm text-neutral-600">Neighbourhood*</label>
+          <select id="host-neighbourhood" required name="neighbourhood"
+                  class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
+            <option value="">Select…</option>
+            <option>Beltline</option>
+            <option>Downtown West End</option>
+            <option>Eau Claire</option>
+            <option>Mission</option>
+            <option>East Village</option>
+            <option>Cliff Bungalow</option>
+            <option>Sunalta</option>
+            <option>Mahogany</option>
+            <option>Seton</option>
+            <option>Glacier Ridge</option>
+            <option>Saddle Ridge</option>
+            <option>Other</option>
+          </select>
+          <div id="host-neighbourhood-other" class="mt-2 hidden" data-other-container>
+            <label class="text-sm text-neutral-600">If Other, specify</label>
+            <input name="neighbourhood_other" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="Type neighbourhood" />
           </div>
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div>
-              <label class="text-sm text-neutral-600">Space type*</label>
-              <select required name="space_type" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
-                <option value="">Select…</option>
-                <option>Garage</option>
-                <option>Basement</option>
-                <option>Shed</option>
-                <option>Bedroom</option>
-                <option>Other</option>
-              </select>
-              <div class="mt-2 hidden" data-other-container>
-                <label class="text-sm text-neutral-600">If Other, specify</label>
-                <input name="space_type_other" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="Describe the space" />
-              </div>
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600">Approx size*</label>
-              <select required name="size" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
-                <option value="">Select…</option>
-                <option>~5×5 ft (Locker)</option>
-                <option>~5×10 ft (Half Room)</option>
-                <option>~10×10 ft (Room)</option>
-                <option>~10×20 ft (Garage)</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div>
-              <label class="text-sm text-neutral-600">Access hours*</label>
-              <select required name="access_hours" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
-                <option value="">Select…</option>
-                <option>Business hours</option>
-                <option>Evenings/weekends</option>
-                <option>24/7</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600">Security*</label>
-              <select required name="security" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
-                <option value="">Select…</option>
-                <option>Lock only</option>
-                <option>Lock + alarm/camera</option>
-                <option>Gated/secure building</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600">Climate / indoor*</label>
-              <select required name="climate" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
-                <option value="">Select…</option>
-                <option>Indoor (unheated)</option>
-                <option>Indoor (heated)</option>
-                <option>Outdoor (covered)</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div>
-              <label class="text-sm text-neutral-600">Monthly price expectation (CAD)*</label>
-              <input required name="price_expectation" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="$100–$250" />
-            </div>
-            <div>
-              <label class="text-sm text-neutral-600">Available from*</label>
-              <input required type="date" name="available_from" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
-            </div>
-          </div>
-          <div>
-            <label class="text-sm text-neutral-600">Space photos (3–5 images)</label>
-            <input type="file" name="photos" accept="image/*" multiple class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
-          </div>
-          <div>
-            <label class="text-sm text-neutral-600">House rules / notes</label>
-            <textarea name="rules" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" rows="3" placeholder="e.g., no access after 10pm; fragile items okay; staircase to basement."></textarea>
-          </div>
-          <div data-netlify-recaptcha="true" class="mt-2"></div>
-          <label class="flex items-start gap-2 text-sm text-neutral-600"><input type="checkbox" required class="mt-1"/> I confirm I own or control the space, and I won’t accept hazardous, illegal, perishable, or flammable items.</label>
-          <button class="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-[#4F9DCB] px-6 py-3 text-white">Submit host application</button>
-          <p class="text-xs text-neutral-500">By submitting, you consent to be contacted for listing verification and agree to our privacy policy.</p>
-        </form>
+        </div>
       </div>
-    </section>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <!-- Space type + Other -->
+        <div>
+          <label class="text-sm text-neutral-600">Space type*</label>
+          <select id="host-space-type" required name="space_type"
+                  class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
+            <option value="">Select…</option>
+            <option>Garage</option>
+            <option>Basement</option>
+            <option>Shed</option>
+            <option>Bedroom</option>
+            <option>Other</option>
+          </select>
+          <div id="host-space-type-other" class="mt-2 hidden" data-other-container>
+            <label class="text-sm text-neutral-600">If Other, specify</label>
+            <input name="space_type_other" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="Describe the space" />
+          </div>
+        </div>
+
+        <div>
+          <label class="text-sm text-neutral-600">Approx size*</label>
+          <select required name="size" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
+            <option value="">Select…</option>
+            <option>~5×5 ft (Locker)</option>
+            <option>~5×10 ft (Half Room)</option>
+            <option>~10×10 ft (Room)</option>
+            <option>~10×20 ft (Garage)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div>
+          <label class="text-sm text-neutral-600">Access hours*</label>
+          <select required name="access_hours" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
+            <option value="">Select…</option>
+            <option>Business hours</option>
+            <option>Evenings/weekends</option>
+            <option>24/7</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-sm text-neutral-600">Security*</label>
+          <select required name="security" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
+            <option value="">Select…</option>
+            <option>Lock only</option>
+            <option>Lock + alarm/camera</option>
+            <option>Gated/secure building</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-sm text-neutral-600">Climate / indoor*</label>
+          <select required name="climate" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2">
+            <option value="">Select…</option>
+            <option>Indoor (unheated)</option>
+            <option>Indoor (heated)</option>
+            <option>Outdoor (covered)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div>
+          <label class="text-sm text-neutral-600">Monthly price expectation (CAD)*</label>
+          <input required name="price_expectation" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" placeholder="$100–$250" />
+        </div>
+        <div>
+          <label class="text-sm text-neutral-600">Available from*</label>
+          <input required type="date" name="available_from" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
+        </div>
+      </div>
+
+      <div>
+        <label class="text-sm text-neutral-600">Space photos (3–5 images)</label>
+        <input type="file" name="photos" accept="image/*" multiple
+               class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2" />
+      </div>
+
+      <div>
+        <label class="text-sm text-neutral-600">House rules / notes</label>
+        <textarea name="rules" class="mt-1 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2"
+                  rows="3" placeholder="e.g., no access after 10pm; fragile items okay; staircase to basement."></textarea>
+      </div>
+
+      <!-- reCAPTCHA (Host) -->
+      <div data-netlify-recaptcha="true" class="mt-2"></div>
+
+      <label class="flex items-start gap-2 text-sm text-neutral-600">
+        <input type="checkbox" required class="mt-1"/>
+        I confirm I own or control the space, and I won’t accept hazardous, illegal, perishable, or flammable items.
+      </label>
+
+      <button class="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-[#4F9DCB] px-6 py-3 text-white">
+        Submit host application
+      </button>
+      <p class="text-xs text-neutral-500">By submitting, you consent to be contacted for listing verification and agree to our privacy policy.</p>
+    </form>
+  </div>
+</section>
+
 
     <!-- Footer -->
     <footer class="border-t border-neutral-200 bg-white">
@@ -432,32 +459,27 @@
       <div class="border-t border-neutral-200 py-6 text-center text-xs text-neutral-500">© 2025 StashIt. All rights reserved.</div>
     </footer>
 
-  <!-- Simple script to show/hide “Other” text fields when user selects Other -->
-  <script>
-    (function () {
-      function wireOther(select) {
-        var container = select.parentElement.querySelector('[data-other-container]');
-        if (!container) return;
-        var input = container.querySelector('input');
-        function sync() {
-          var isOther = (select.value || '').toLowerCase() === 'other';
-          container.classList.toggle('hidden', !isOther);
-          if (isOther) {
-            input.setAttribute('required', 'required');
-          } else {
-            input.removeAttribute('required');
-            input.value = '';
-          }
-        }
-        select.addEventListener('change', sync);
-        sync();
+ <!-- Simple script to show/hide “Other” text fields when user selects Other -->
+<script>
+(function () {
+  function wireOther(select) {
+    var container = select.parentElement.querySelector('[data-other-container]');
+    if (!container) return;
+    var input = container.querySelector('input');
+
+    function sync() {
+      var isOther = (select.value || '').toLowerCase() === 'other';
+      container.classList.toggle('hidden', !isOther);
+      if (isOther) {
+        input.setAttribute('required', 'required');
+      } else {
+        input.removeAttribute('required');
+        input.value = '';
       }
-      document.querySelectorAll('select[name="neighbourhood"]').forEach(wireOther);
-      var spaceType = document.querySelector('form[name="host"] select[name="space_type"]');
-      if (spaceType) wireOther(spaceType);
-    })();
-  </script>
-  <script>
+    }
+
+    select.addEventListener('change
+
     // Limit photo uploads to max 5 images per form
     (function(){
       function enforceMaxFiles(input, max){
