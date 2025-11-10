@@ -1,6 +1,13 @@
 [build]
-  functions = "netlify/functions"
   publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["nodemailer"]
+
+[functions."send-email"]
+  events = ["submission-created"]
 
 [[redirects]]
   from = "/api/*"
