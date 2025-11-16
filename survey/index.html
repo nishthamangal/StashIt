@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StashIt – Quick Storage Survey</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-neutral-50 text-neutral-900">
+
+  <!-- Header -->
+  <header class="border-b border-neutral-200 bg-white sticky top-0 z-20">
+    <div class="mx-auto max-w-4xl px-4 py-4 flex items-center gap-2">
+      <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1E4D2B] text-white font-bold">S</div>
+      <div class="text-xl font-semibold tracking-tight">
+        <span class="text-[#1E4D2B]">Stash</span><span class="text-[#4F9DCB]">It</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Intro -->
+  <section class="mx-auto max-w-4xl px-4 py-10">
+    <h1 class="text-2xl font-semibold">Quick 10-Second Survey</h1>
+    <p class="mt-3 text-neutral-700 leading-relaxed">
+      Hi! We’re building <strong>StashIt</strong> — a simple way for neighbours to safely share unused space.
+      Whether you need storage or have extra space to earn from, we want to create a solution that’s cheaper than
+      traditional storage and more convenient for everyone.
+      <br><br>
+      This quick survey helps us understand what people actually want so we can design the right features, pricing,
+      and safety standards. Your responses are anonymous unless you choose to leave your email at the end
+      to receive a copy of your answers. 🙏
+    </p>
+  </section>
+
+  <!-- Survey Form -->
+  <section class="mx-auto max-w-4xl px-4 pb-16">
+    <form
+      name="survey"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/survey/thanks"
+      class="grid gap-10 bg-white border border-neutral-200 p-6 rounded-2xl shadow-sm"
+    >
+      <!-- Netlify form name -->
+      <input type="hidden" name="form-name" value="survey" />
+      <!-- Subject for your email function -->
+      <input type="hidden" name="_subject" value="New Survey Response – StashIt" />
+      <!-- Honeypot -->
+      <p class="hidden" aria-hidden="true">
+        <label>Don’t fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <!-- Question 1 -->
+      <div>
+        <label class="font-medium text-lg">
+          1. How likely are you to use extra storage space from a neighbour if it was safe and affordable?
+        </label>
+        <div class="mt-3 flex items-center justify-between text-sm text-neutral-700">
+          <span>Least likely</span>
+          <span>Most likely</span>
+        </div>
+        <div class="mt-2 flex gap-4 text-sm">
+          <label><input type="radio" name="q1" value="1" required /> 1</label>
+          <label><input type="radio" name="q1" value="2" /> 2</label>
+          <label><input type="radio" name="q1" value="3" /> 3</label>
+          <label><input type="radio" name="q1" value="4" /> 4</label>
+          <label><input type="radio" name="q1" value="5" /> 5</label>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div>
+        <label class="font-medium text-lg">
+          2. How likely are you to rent out unused space in your home to earn extra income?
+        </label>
+        <div class="mt-3 flex items-center justify-between text-sm text-neutral-700">
+          <span>Least likely</span>
+          <span>Most likely</span>
+        </div>
+        <div class="mt-2 flex gap-4 text-sm">
+          <label><input type="radio" name="q2" value="1" required /> 1</label>
+          <label><input type="radio" name="q2" value="2" /> 2</label>
+          <label><input type="radio" name="q2" value="3" /> 3</label>
+          <label><input type="radio" name="q2" value="4" /> 4</label>
+          <label><input type="radio" name="q2" value="5" /> 5</label>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div>
+        <label class="font-medium text-lg">
+          3. How much storage space do you typically need (or could offer)?
+        </label>
+        <div class="mt-3 flex flex-col gap-2 text-sm">
+          <label><input type="radio" name="q3" value="Very small" required /> Very small (closet or shelf space)</label>
+          <label><input type="radio" name="q3" value="Small" /> Small (a few boxes / sports gear)</label>
+          <label><input type="radio" name="q3" value="Medium" /> Medium (furniture, several boxes)</label>
+          <label><input type="radio" name="q3" value="Large" /> Large (garage-sized / vehicle / equipment)</label>
+          <label class="flex flex-wrap items-center gap-2">
+            <input type="radio" name="q3" value="Other" />
+            <span>Other →</span>
+            <input
+              type="text"
+              name="q3_other"
+              class="border border-neutral-300 rounded-lg px-2 py-1 flex-1 min-w-[140px]"
+              placeholder="Describe..."
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div>
+        <label class="font-medium text-lg">
+          4. How much would you be willing to pay — or accept — for that amount of space?
+        </label>
+        <div class="mt-3 flex flex-col gap-2 text-sm">
+          <label><input type="radio" name="q4" value="Under $50" required /> Under $50</label>
+          <label><input type="radio" name="q4" value="$50–$100" /> $50–$100</label>
+          <label><input type="radio" name="q4" value="$100–$150" /> $100–$150</label>
+          <label><input type="radio" name="q4" value="$150–$250" /> $150–$250</label>
+          <label><input type="radio" name="q4" value="$250+" /> $250+</label>
+          <label class="flex flex-wrap items-center gap-2">
+            <input type="radio" name="q4" value="Other" />
+            <span>Other →</span>
+            <input
+              type="text"
+              name="q4_other"
+              class="border border-neutral-300 rounded-lg px-2 py-1 flex-1 min-w-[140px]"
+              placeholder="Amount..."
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div>
+        <label class="font-medium text-lg">
+          5. How likely are you to try a platform like this if it’s easy, verified, and safe?
+        </label>
+        <div class="mt-3 flex items-center justify-between text-sm text-neutral-700">
+          <span>Least likely</span>
+          <span>Most likely</span>
+        </div>
+        <div class="mt-2 flex gap-4 text-sm">
+          <label><input type="radio" name="q5" value="1" required /> 1</label>
+          <label><input type="radio" name="q5" value="2" /> 2</label>
+          <label><input type="radio" name="q5" value="3" /> 3</label>
+          <label><input type="radio" name="q5" value="4" /> 4</label>
+          <label><input type="radio" name="q5" value="5" /> 5</label>
+        </div>
+      </div>
+
+      <!-- Optional email for respondent copy -->
+      <div class="border-t border-neutral-200 pt-4">
+        <label class="block font-medium text-sm">If you’d like a copy of your responses, drop your email (optional):</label>
+        <input
+          type="email"
+          name="email"
+          class="mt-2 w-full rounded-xl border border-neutral-300 bg-white px-3 py-2 text-sm"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <!-- reCAPTCHA -->
+      <div class="mt-2" data-netlify-recaptcha="true"></div>
+
+      <button
+        class="mt-4 w-full rounded-xl bg-[#1E4D2B] text-white font-medium py-3 text-sm hover:bg-[#163a20] transition"
+      >
+        Submit survey
+      </button>
+
+      <p class="text-[11px] text-neutral-500">
+        By submitting, you agree that StashIt may use these anonymous results to design better storage options.
+      </p>
+    </form>
+  </section>
+
+</body>
+</html>
