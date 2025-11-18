@@ -14,58 +14,86 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.handler = async (event) => {
+  console.log("send-email invoked");
+  console.log("httpMethod:", event.httpMethod);
+  console.log("raw body (first 300 chars):", event.body ? event.body.slice(0, 300) : "no body");
+
+  let payload;
   try {
-    let payload;
+    payload = event.body ? JSON.parse(event.body) : {};
+  } catch (e) {
+    console.error("Failed to parse JSON body:", e.message);
+    payload = {};
+  }
 
-    // Netlify form event (submission-created)
-    if (event.headers && event.headers["x-netlify-event"] === "submission-created") {
-      const body = JSON.parse(event.body);
-      payload = body.payload || body;
-    }
-    // Direct test call via POST /.netlify/functions/send-email
-    else if (event.httpMethod === "POST") {
-      payload = JSON.parse(event.body);
-    } else {
-      // Ignore other calls
-      return {
-        statusCode: 200,
-        body: "OK",
-      };
-    }
+  let data = {};
+  let formName = "StashIt Form";
 
-    const data = payload.data || payload;
-    const formName =
-      payload.form_name ||
-      data.formName ||
+  // Case 1: Netlify submission-created event: { payload: { form_name, data, ... } }
+  if (payload && payload.payload && payload.payload.data) {
+    const p = payload.payload;
+    formName = p.form_name || formName;
+    data = p.data || {};
+    console.log("Detected Netlify submission-created event for form:", formName);
+  }
+  // Case 2: Sometimes it may be { form_name, data }
+  else if (payload && payload.data) {
+    formName = payload.form_name || payload.formName || formName;
+    data = payload.data;
+    console.log("Detected payload.data form:", formName);
+  }
+  // Case 3: Direct POST test: fields directly in body
+  else {
+    data = payload || {};
+    formName =
       data.form_name ||
-      "StashIt Form";
+      data["form-name"] ||
+      data.formName ||
+      formName;
+    console.log("Detected direct POST form:", formName);
+  }
 
-    const submitterEmail = data.email;
+  // If we somehow didn't get any fields, bail cleanly
+  if (!data || Object.keys(data).length === 0) {
+    console.warn("No data found in submission, nothing to send.");
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ ok: true, note: "No data in submission" }),
+    };
+  }
 
-    // Build a simple text summary of all fields (except spam/captcha)
-    const lines = Object.keys(data)
-      .filter(
-        (key) =>
-          ![
-            "g-recaptcha-response",
-            "bot-field",
-            "form-name",
-            "form_name",
-          ].includes(key)
-      )
-      .map((key) => `${key}: ${data[key]}`);
+  const submitterEmail = data.email;
 
-    const summaryText = lines.join("\n");
+  // Build a summary of all fields except spam/recaptcha/meta
+  const excludedKeys = [
+    "g-recaptcha-response",
+    "bot-field",
+    "form-name",
+    "form_name",
+    "form-id",
+    "formId",
+  ];
 
-    // 1) Email to you (info@stashitvault.com)
+  const lines = Object.keys(data)
+    .filter((key) => !excludedKeys.includes(key))
+    .map((key) => `${key}: ${data[key]}`);
+
+  const summaryText = lines.join("\n");
+
+  try {
+    // 1) Email to you
     await transporter.sendMail({
       from: `"StashIt" <${GMAIL_USER}>`,
       to: "info@stashitvault.com",
       subject: `New ${formName} submission`,
-      text: `New ${formName} submission:\n\n${summaryText}\n\n— Netlify Forms`,
+      text:
+        `You have a new ${formName} submission:\n\n` +
+        `${summaryText}\n\n` +
+        `— Sent automatically from Netlify Forms`,
     });
+    console.log("Owner email sent to info@stashitvault.com");
 
-    // 2) Confirmation email to the person who filled in the form (if they gave an email)
+    // 2) Confirmation email to submitter (if email field present)
     if (submitterEmail) {
       await transporter.sendMail({
         from: `"StashIt" <${GMAIL_USER}>`,
@@ -78,6 +106,9 @@ exports.handler = async (event) => {
           `We’ll review it and get back to you soon.\n\n` +
           `— StashIt team`,
       });
+      console.log("Confirmation email sent to:", submitterEmail);
+    } else {
+      console.log("No email field in submission; skipping confirmation email.");
     }
 
     return {
