@@ -1,15 +1,7 @@
-[build]
-  publish = "."
-  functions = "netlify/functions"
-
 [functions]
-  node_bundler = "esbuild"
-  external_node_modules = ["nodemailer"]
+  directory = "netlify/functions"
 
 [functions."send-email"]
+  # Fire send-email.js whenever any Netlify form is submitted
   events = ["submission-created"]
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
+  node_bundler = "esbuild"
