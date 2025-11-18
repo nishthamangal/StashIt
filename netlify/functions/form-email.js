@@ -59,15 +59,23 @@ export const handler = async (event) => {
       });
     }
 
+    // ✅ On success: redirect to thank-you page
     return {
-      statusCode: 200,
-      body: JSON.stringify({ message: "Emails sent successfully!" }),
+      statusCode: 302,
+      headers: {
+        Location: "/thank-you.html",
+      },
     };
   } catch (err) {
     console.error("Email Error:", err);
+    // Optional: simple error page instead of JSON
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Email failed." }),
+      headers: {
+        "Content-Type": "text/html",
+      },
+      body:
+        "<h1>Something went wrong</h1><p>Please try again in a few minutes.</p>",
     };
   }
 };
