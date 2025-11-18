@@ -193,14 +193,11 @@
         <form
           name="renter"
           method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          enctype="multipart/form-data"
-          action="/thank-you.html"
+          action="/.netlify/functions/emails"
+          enctype="application/x-www-form-urlencoded"
           class="mt-8 grid grid-cols-1 gap-4"
         >
           <input type="hidden" name="form-name" value="renter" />
-          <p class="hidden" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" /></label></p>
           <input type="hidden" name="_subject" value="New Renter Lead – StashIt" />
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
@@ -322,14 +319,11 @@
         <form
           name="host"
           method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          enctype="multipart/form-data"
-          action="/thank-you.html"
+          action="/.netlify/functions/emails"
+          enctype="application/x-www-form-urlencoded"
           class="mt-8 grid grid-cols-1 gap-4"
         >
           <input type="hidden" name="form-name" value="host" />
-          <p class="hidden" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" /></label></p>
           <input type="hidden" name="_subject" value="New Host Lead – StashIt" />
 
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
