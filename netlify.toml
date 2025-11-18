@@ -1,7 +1,7 @@
 [functions]
   directory = "netlify/functions"
 
-[functions."send-email"]
-  # Fire send-email.js whenever any Netlify form is submitted
+[functions."emails"]
+  # Fire emails.js whenever any Netlify form is submitted
   events = ["submission-created"]
   node_bundler = "esbuild"
